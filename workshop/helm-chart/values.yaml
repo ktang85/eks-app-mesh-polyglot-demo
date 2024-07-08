@@ -8,10 +8,10 @@ detail:
   name: proddetail
 
   image:
-    repository: public.ecr.aws/u2g6w7p2/eks-workshop-demo/catalog_detail
+    repository: 755863909630.dkr.ecr.ap-southeast-1.amazonaws.com/eks-app-mesh-demo/catalog_detail
     tag: "1.0"
     pullPolicy: Always
-  
+
   nameOverride: ""
   fullnameOverride: ""
 
@@ -21,7 +21,8 @@ detail:
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     hosts:
@@ -62,7 +63,7 @@ detail:
   env:
     - name: AWS_XRAY_DAEMON_ADDRESS
       value: xray-service.default:2000
-      
+
   resources:
     limits:
       cpu: 500m
@@ -86,7 +87,7 @@ detail:
   tolerations: []
 
   affinity: {}
-  
+
 catalog:
   serviceAccountName:
     enabled: false
@@ -97,7 +98,7 @@ catalog:
   name: prodcatalog
 
   image:
-    repository: public.ecr.aws/u2g6w7p2/eks-workshop-demo/product_catalog
+    repository: 755863909630.dkr.ecr.ap-southeast-1.amazonaws.com/eks-app-mesh-demo/product_catalog
     tag: "1.0"
     pullPolicy: Always
 
@@ -110,7 +111,8 @@ catalog:
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     hosts:
@@ -149,7 +151,7 @@ catalog:
   #   timeoutSeconds: 5
   #   failureThreshold: 1
   #   successThreshold: 1
-    
+
   env:
     - name: AGG_APP_URL
       value: "http://proddetail.workshop:3000/catalogDetail"
@@ -157,8 +159,9 @@ catalog:
       value: xray-service.default:2000
     - name: DATABASE_SERVICE_URL
       value: mysql.workshop
-      
-  resources: {}
+
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -183,7 +186,7 @@ frontend:
   lbType: alb
 
   image:
-    repository: public.ecr.aws/u2g6w7p2/eks-workshop-demo/frontend_node
+    repository: 755863909630.dkr.ecr.ap-southeast-1.amazonaws.com/eks-app-mesh-demo/frontend_node
     tag: "2.0"
     pullPolicy: Always
 
@@ -201,7 +204,8 @@ frontend:
 
   ingress:
     enabled: false
-    annotations: {}
+    annotations:
+      {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
@@ -240,14 +244,15 @@ frontend:
   #   timeoutSeconds: 5
   #   failureThreshold: 1
   #   successThreshold: 1
-    
+
   env:
     - name: BASE_URL
       value: "http://prodcatalog.workshop:5000/products/"
     - name: AWS_XRAY_DAEMON_ADDRESS
       value: xray-service.default:2000
-    
-  resources: {}
+
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
